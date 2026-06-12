@@ -28,7 +28,7 @@ ChordE 是一个基于钢琴键盘的和弦工具，支持 **和弦正推** 与 
 
 反推模式进入时默认是空状态，方便你直接点击键盘输入音符进行识别。
 
-![反推模式空状态](docs/step-reverse-empty.jpeg)
+![反推模式空状态](docs/step-reverse-empty.png)
 
 ## 功能特性
 
