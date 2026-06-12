@@ -16,7 +16,7 @@ ChordE 是一个基于钢琴键盘的和弦工具，支持 **和弦正推** 与 
 - 和弦属性
 - 和弦层级 / 扩展
 
-![正推模式](docs/step-forward.png)
+![正推模式](docs/step-forward-new.png)
 
 ### 第二步：在键盘上查看和弦音
 
