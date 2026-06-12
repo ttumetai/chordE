@@ -284,6 +284,7 @@ export default function App() {
   const [selectedFamilyId, setSelectedFamilyId] = useState<ForwardFamilyId>(DEFAULT_FAMILY_ID);
   const [selectedFormulaId, setSelectedFormulaId] = useState<string>(DEFAULT_FORMULA);
   const [selectedMidiNotes, setSelectedMidiNotes] = useState<number[]>([]);
+  const [reverseAnchorStartMidi, setReverseAnchorStartMidi] = useState<number>(48);
   const [keyCenter, setKeyCenter] = useState<string>(DEFAULT_KEY_CENTER);
   const [keyboardSpan, setKeyboardSpan] = useState<KeyboardSpan>(DEFAULT_KEYBOARD_SPAN);
   const [playMode, setPlayMode] = useState<PlayMode>(DEFAULT_PLAY_MODE);
@@ -313,6 +314,7 @@ export default function App() {
     if (demo === "reverse-empty") {
       setMode("reverse");
       setSelectedMidiNotes([]);
+      setReverseAnchorStartMidi(48);
       setKeyboardSpan("2");
       return;
     }
@@ -320,6 +322,7 @@ export default function App() {
     if (demo === "reverse-detected") {
       setMode("reverse");
       setSelectedMidiNotes([48, 52, 55]);
+      setReverseAnchorStartMidi(48);
       setKeyboardSpan("1");
       setKeyCenter("C");
     }
@@ -375,8 +378,18 @@ export default function App() {
     [forwardMidiNotes, keyboardSpan],
   );
   const reverseKeyboardRange = useMemo(
-    () => getKeyboardRange(selectedMidiNotes.length > 0 ? selectedMidiNotes : [48], keyboardSpan),
-    [keyboardSpan, selectedMidiNotes],
+    () => {
+      if (keyboardSpan === "1") {
+        return getKeyboardRange(selectedMidiNotes.length > 0 ? selectedMidiNotes : [48], "1");
+      }
+
+      if (keyboardSpan === "2") {
+        return getKeyboardRange(selectedMidiNotes.length > 0 ? selectedMidiNotes : [48], "2");
+      }
+
+      return { startMidi: reverseAnchorStartMidi, endMidi: reverseAnchorStartMidi + 23 };
+    },
+    [keyboardSpan, reverseAnchorStartMidi, selectedMidiNotes],
   );
 
   const rootOptions = useMemo(
@@ -394,9 +407,14 @@ export default function App() {
 
   const handleToggleMidi = async (midi: number) => {
     setMode("reverse");
-    setSelectedMidiNotes((current) =>
-      current.includes(midi) ? current.filter((value) => value !== midi) : [...current, midi].sort((a, b) => a - b),
-    );
+    setSelectedMidiNotes((current) => {
+      const exists = current.includes(midi);
+      const next = exists ? current.filter((value) => value !== midi) : [...current, midi].sort((a, b) => a - b);
+      if (next.length === 0) {
+        setReverseAnchorStartMidi(48);
+      }
+      return next;
+    });
     await pianoAudio.playMidi(midi);
   };
 
@@ -470,6 +488,7 @@ export default function App() {
               className={`mode-tab${mode === "reverse" ? " active" : ""}`}
               onClick={() => {
                 setSelectedMidiNotes([]);
+                setReverseAnchorStartMidi(48);
                 setMode("reverse");
               }}
             >
@@ -606,7 +625,10 @@ export default function App() {
                   <button
                     type="button"
                     className="ghost-button secondary-button"
-                    onClick={() => setSelectedMidiNotes([])}
+                    onClick={() => {
+                      setSelectedMidiNotes([]);
+                      setReverseAnchorStartMidi(48);
+                    }}
                     disabled={selectedMidiNotes.length === 0}
                   >
                     清空
