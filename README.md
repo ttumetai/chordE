@@ -1,6 +1,18 @@
 # ChordE
 
+[![Online Demo](https://img.shields.io/badge/Online%20Demo-ttumetai.github.io%2FchordE-2D7FF9?style=for-the-badge&logo=githubpages&logoColor=white)](https://ttumetai.github.io/chordE/)
+[![Powered by Codex](https://img.shields.io/badge/Powered%20by-Codex-111111?style=for-the-badge&logo=openai&logoColor=white)](https://chatgpt.com/codex/)
+[![Powered by ChatGPT](https://img.shields.io/badge/Powered%20by-ChatGPT-10A37F?style=for-the-badge&logo=openai&logoColor=white)](https://chatgpt.com/)
+
 ChordE 是一个基于钢琴键盘的和弦工具，支持 **和弦正推** 与 **和弦反推**。
+
+## 在线演示
+
+**在线地址**
+
+https://ttumetai.github.io/chordE/
+
+GitHub Pages 在线版本，无需安装即可直接打开使用。
 
 - `正推模式`：选择根音与和弦类型，在钢琴键盘上显示对应音符
 - `反推模式`：直接点击钢琴键，由系统识别最可能的和弦名称
@@ -93,13 +105,25 @@ ChordE 是一个基于钢琴键盘的和弦工具，支持 **和弦正推** 与 
 - Node.js 18+
 - npm 9+
 
-### 安装依赖
+### 1. 克隆仓库
+
+```bash
+git clone https://github.com/ttumetai/chordE.git
+```
+
+### 2. 进入项目目录
+
+```bash
+cd chordE
+```
+
+### 3. 安装依赖
 
 ```bash
 npm install
 ```
 
-### 启动开发环境
+### 4. 启动开发环境
 
 ```bash
 npm run dev
@@ -107,13 +131,41 @@ npm run dev
 
 开发服务器默认监听 `0.0.0.0`。
 
-### 构建生产版本
+如果你在本机访问，通常可以直接打开：
+
+```text
+http://localhost:5173
+```
+
+如果终端里显示了其他端口，请以终端实际输出为准。
+
+### 5. 构建生产版本
 
 ```bash
 npm run build
 ```
 
-### 运行测试
+构建完成后，产物会输出到：
+
+```text
+dist/
+```
+
+### 6. 本地预览生产版本
+
+```bash
+npm run preview
+```
+
+默认情况下，你可以在浏览器打开：
+
+```text
+http://localhost:4173
+```
+
+如果终端里显示了不同端口，请以终端实际输出为准。
+
+### 7. 运行测试
 
 ```bash
 npm test
